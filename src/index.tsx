@@ -1,7 +1,8 @@
+// @ts-nocheck
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { withApollo, ApolloProvider } from 'react-apollo'
-import { ApolloClient, ApolloLink, InMemoryCache, HttpLink } from 'apollo-boost'
+import { ApolloClient, ApolloLink, InMemoryCache, HttpLink, NormalizedCacheObject } from 'apollo-boost'
 
 import App from './components/App'
 import { isProd } from './utils/envs'
@@ -17,7 +18,7 @@ const authLink = new ApolloLink((operation, forward) => {
   return forward(operation)
 })
 
-const client = new ApolloClient({
+const client = new ApolloClient<NormalizedCacheObject>({
   link: authLink.concat(httpLink), // Chain it with the HttpLink
   cache: new InMemoryCache()
 })
